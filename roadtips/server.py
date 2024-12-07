@@ -1,7 +1,6 @@
 #This file goes in the server's system
 
 from socket import *
-import sys
 import sqlite3 
 
 def main():
@@ -11,17 +10,12 @@ def main():
     #define cursor
     cursor = conn.cursor
 
-    #if user does not include what port to use
-    if len(sys.argv) <= 1:
-        print ('Usage : "./server.py server_ip"\n[server_ip : It is the IP Address sof the server')
-        sys.exit(2)
-
     # Create a server socket, bind it to a port and start listening
     tcpSerSock = socket(AF_INET, SOCK_STREAM)
 
     #define host and port
     HOST = 'localhost'
-    PORT = int(sys.argv[1])
+    PORT = 12345
 
     #open server connection
     tcpSerSock.bind((HOST, PORT))
