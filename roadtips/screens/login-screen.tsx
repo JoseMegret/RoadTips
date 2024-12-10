@@ -9,7 +9,7 @@ export default function LoginScreen({ navigation }) {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleLogin = () => {
-    // TODO: Implement actual authentication
+    // TODO: Implement actual authentication logic
     navigation.replace('Main');
   };
 
@@ -24,7 +24,7 @@ export default function LoginScreen({ navigation }) {
         alert('Passwords do not match');
         return;
       }
-      // TODO: Implement actual account creation
+      // TODO: Implement actual account creation logic
       alert('Account created successfully');
       setIsCreatingAccount(false);
     } else {
@@ -32,16 +32,21 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
+  const handleEnterAsGuest = () => {
+    // Navigate to the main screen as a guest
+    navigation.replace('Main');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <Image
-          source={{ uri: '/placeholder.svg' }}
+          source={{ uri: '/placeholder.svg' }} // Replace with your logo or image URI
           style={styles.logo}
         />
         <Text style={styles.title}>RoadTips</Text>
         <Text style={styles.subtitle}>Your Travel Companion</Text>
-        
+
         <View style={styles.form}>
           <TextInput
             style={styles.input}
@@ -67,22 +72,26 @@ export default function LoginScreen({ navigation }) {
               secureTextEntry
             />
           )}
-          {!isCreatingAccount && (
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-              <Text style={styles.buttonText}>Login</Text>
+          {!isCreatingAccount ? (
+            <>
+              <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                <Text style={styles.buttonText}>Login</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.linkButton} onPress={handleForgotPassword}>
+                <Text style={styles.linkText}>Forgot Password?</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.linkButton} onPress={() => navigation.navigate('SignUp')}>
+                <Text style={styles.linkText}>Need an account? Sign up</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.linkButton} onPress={handleEnterAsGuest}>
+                <Text style={styles.linkText}>Enter as Guest</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
+              <Text style={styles.buttonText}>Create Account</Text>
             </TouchableOpacity>
           )}
-          
-          {!isCreatingAccount && (
-            <TouchableOpacity style={styles.linkButton} onPress={handleForgotPassword}>
-              <Text style={styles.linkText}>Forgot Password?</Text>
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity style={styles.linkButton} onPress={handleCreateAccount}>
-            <Text style={styles.linkText}>
-              {isCreatingAccount ? 'Create Account' : 'Need an account? Sign up'}
-            </Text>
-          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -148,4 +157,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
